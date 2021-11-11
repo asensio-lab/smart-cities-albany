@@ -10,9 +10,6 @@ library(gridExtra)
 if (!require("gdata")) install.packages("gdata") 
 library(gdata)
 
-if (!require("tibble")) install.packages("tibble") 
-library(tibble)
-
 if (!require("plm")) install.packages("plm") 
 library(plm) 
 
