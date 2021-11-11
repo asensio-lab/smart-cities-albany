@@ -7,10 +7,7 @@ This is the code repository for the Albany Housing Project. The R-code consists 
 
 The R scripts are written in R 4.0.2 and run protocols for Smart Cities Albany Housing Project: Policy and Program Evaluation of HUD-funded properties and electricity consumption over the span from 2004 to 2019 years. The following R packages are used in this analysis:
 
-1. tidyverse
-2. dplyr
-3. readr
-4. ggplot2
+- Tidyverse, including readr (read data), dplyr (manipulate data), ggplot2 (create graphics)
 5. ggalt
 6. gridExtra
 7. gdata
