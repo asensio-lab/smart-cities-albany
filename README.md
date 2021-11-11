@@ -2,7 +2,6 @@
 
 This is the code repository for the Albany Housing Project. The R-code consists of 2 parts. The first file consists of the fixed-effects model and matching algorithms to compare energy use in Albany, GA, among HUD-funded programs' participants and non-participants. The second part includes geographical visualization of the data (R script and supporting files). 
 
-[![DOI]()
 
 ## Installation
 
