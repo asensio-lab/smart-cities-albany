@@ -1,15 +1,6 @@
 if (!require("tidyverse")) install.packages("tidyverse") 
 library(tidyverse)
 
-if (!require("dplyr")) install.packages("dplyr") 
-library(dplyr)
-
-if (!require("readr")) install.packages("readr") 
-library(readr)
-
-if (!require("ggplot2")) install.packages("ggplot2") 
-library(ggplot2)
-
 if (!require("ggalt")) install.packages("ggalt") 
 library(ggalt)
 
