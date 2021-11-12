@@ -17,29 +17,29 @@ The R scripts are written in R 4.0.2 and run protocols for Smart Cities Albany H
 - 'MatchIt' (multivariate matching)
 - 'cem' (loss function computation)
 - 'devtools' (developer tools such as indtallation from GitHub)
-- 'MatchingFrontier'(computation of the balance - sample size frontier)
+- 'MatchingFrontier' (computation of the balance - sample size frontier)
 
 # Panel data analysis
-- 'plm'(linear models for panel data) 
-- 'Hmisc' ()
-- 'lmtest' ()
+- 'plm' (linear models for panel data) 
+- 'lmtest' (testing linear regression models)
 - 'sandwich' (robust and cluster errors)
 - 'multiwayvcov' (multi-way clustering)
+- 'Hmisc' (miscellaneous functions for data analysis)
 
 # Visualization
+- 'cowplot' (streamlined plot theme and plot annotations for 'ggplot2')
 - 'gridExtra' (miscellaneous functions for "grid" graphics)
-- 'sf'
-- 'tmap'
-- 'tigris'
-- 'rappdirs'
-- 'shinyjs'
-- 'RColorBrewer'
-- 'raster'
-- 'biscale'
-- 'cowplot'
-- 'rgeos'
-- 'maps'
-- 'cartography'
+- 'sf' (spatial vector data encoder)
+- 'tmap' (visualization of spatial data distributions)
+- 'tigris' (download shapefiles)
+- 'rappdirs' (data saving)
+- 'shinyjs' (call custom JavaScript functions from R)
+- 'RColorBrewer' (color palettes)
+- 'raster' (high-level functions for raster and vector data)
+- 'biscale' (tools and palettes for mapping)
+- 'rgeos' (Open Source ('GEOS') using the C 'API' for topology operations on geometries)
+- 'maps' (display of maps)
+- 'cartography' (map integration)
 
 
 ## Data Analysis
@@ -55,4 +55,4 @@ First, the R code `Data_analysis.R` implements the following algorithms to reduc
 
 The R code `Data_analysis.R` evaluates the overall treatment effect of HUD funding, along with the treatment effect per program and per project, on the monthly electricity consumption (logged normalized by sqft.) from 2004 to 2019. Regression adjustments include time and group fixed effects. The model is implemented to the initial dataset as well as to the datasets after matching, standard errors are clustered at the property ID level. The script also contains the code for the visualizations except the Albany map.
 
-The R code `Map.R` supports the visualization of the Albany map.
+The R code `Map.R` supports the visualization of the map of Albany.
