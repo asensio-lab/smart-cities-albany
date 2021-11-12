@@ -1,44 +1,20 @@
-if (!require("tidyverse")) install.packages("tidyverse") 
+if (!require(c("tidyverse", "ggalt","gdata","gridExtra","rgenoud","Matching","MatchIt","plm","Hmisc","lmtest","sandwich","multiwayvcov","cem","devtools")))
+  install.packages(c("tidyverse","ggalt","gdata","gridExtra","rgenoud","Matching","MatchIt","plm","Hmisc","lmtest","sandwich","multiwayvcov","cem","devtools"))
+
 library(tidyverse)
-
-if (!require("ggalt")) install.packages("ggalt") 
 library(ggalt)
-
-if (!require("gridExtra")) install.packages("gridExtra") 
-library(gridExtra)
-
-if (!require("gdata")) install.packages("gdata") 
 library(gdata)
-
-if (!require("plm")) install.packages("plm") 
-library(plm) 
-
-if (!require("Matching")) install.packages("Matching") 
-library(Matching) 
-
-if (!require("MatchIt")) install.packages("MatchIt") 
-library(MatchIt) 
-
-if (!require("Hmisc")) install.packages("Hmisc") 
-library(Hmisc)
-
-if (!require("rgenoud")) install.packages("rgenoud") 
+library(gridExtra)
 library(rgenoud)
-
-if (!require("lmtest")) install.packages("lmtest") 
+library(Matching)
+library(MatchIt)
+library(plm)
+library(Hmisc)
 library(lmtest)
-
-if (!require("sandwich")) install.packages("sandwich") 
 library(sandwich)
-
-if (!require("multiwayvcov")) install.packages("multiwayvcov") 
 library(multiwayvcov)
-
-if (!require("devtools")) install.packages("devtools") 
-library(devtools)
-
-if (!require("cem")) install.packages("cem") 
 library(cem)
+library(devtools)
 
 install_github('ChristopherLucas/MatchingFrontier')
 library(MatchingFrontier)
