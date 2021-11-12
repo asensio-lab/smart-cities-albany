@@ -55,4 +55,4 @@ First, the R code `Data_analysis.R` implements the following algorithms to reduc
 
 The R code `Data_analysis.R` evaluates the overall treatment effect of HUD funding, along with the treatment effect per program and per project, on the monthly electricity consumption (logged normalized by sqft.) from 2004 to 2019. Regression adjustments include time and group fixed effects. The model is implemented to the initial dataset as well as to the datasets after matching, standard errors are clustered at the property ID level. The script also contains the code for the visualizations except the Albany map.
 
-The folder `Map` consists of `Map.R` and several shape files and supports the visualization of the map of Albany.
+The folder `Map` consists of `Map.R` that executes the map code and shape files for Federal Opportunity Zones and Tract and City Boundaries, and supports the visualization of the map of Albany.
