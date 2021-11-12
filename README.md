@@ -7,37 +7,39 @@ This is the code repository for the Albany Housing Project. The R-code consists 
 
 The R scripts are written in R 4.0.2 and run protocols for Smart Cities Albany Housing Project: Policy and Program Evaluation of HUD-funded properties and electricity consumption over the span from 2004 to 2019 years. The following R packages are used in this analysis:
 
-- Tidyverse, including 'readr' (read data), 'tibble' (update dataframes), 'dplyr' (manipulate data), 'ggplot2' (create graphics)
-- ggalt (extra coordinate systems, 'geoms', statistical transformations, scales and fonts for 'ggplot2')
-- gridExtra (miscellaneous functions for "grid" graphics)
-- gdata (data manipulation)
-9. plm 
-10. Matching
-11. MatchIt
-12. Hmisc
-13. rgenoud
-14. lmtest
-15. sandwich
-16. multiwayvcov
-17. devtools
-18. cem
-19. MatchingFrontier
-20. censusxy
+# Data handling
+- 'tidyverse', including 'readr' (read data), 'tibble' (update dataframes), 'dplyr' (manipulate data), 'ggplot2' (create graphics)
+- 'ggalt' (extra coordinate systems, 'geoms', statistical transformations, scales and fonts for 'ggplot2')
+- 'gdata' (data manipulation)
+- 'censusxy' (U.S. Census Bureau's API for matching American street addresses with their longitude and latitude)
 
-20. sf
-21. tmap
-22. tigris
-23. rappdirs
-24. shinyjs
-25. RColorBrewer
-26. raster
-27. biscale
-28. cowplot
-29. rgeos
-30. maps
-31. cartography
-32. censusxy
-33. plyr
+# Matching algorithms
+- 'MatchIt' (multivariate matching)
+- 'cem' (loss function computation)
+- 'devtools' (developer tools such as indtallation from GitHub)
+- 'MatchingFrontier'(computation of the balance - sample size frontier)
+
+# Panel data analysis
+- 'plm'(linear models for panel data) 
+- 'Hmisc' ()
+- 'lmtest' ()
+- 'sandwich' (robust and cluster errors)
+- 'multiwayvcov' (multi-way clustering)
+
+# Visualization
+- 'gridExtra' (miscellaneous functions for "grid" graphics)
+- 'sf'
+- 'tmap'
+- 'tigris'
+- 'rappdirs'
+- 'shinyjs'
+- 'RColorBrewer'
+- 'raster'
+- 'biscale'
+- 'cowplot'
+- 'rgeos'
+- 'maps'
+- 'cartography'
 
 
 ## Data Analysis
