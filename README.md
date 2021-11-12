@@ -7,26 +7,26 @@ This is the code repository for the Albany Housing Project. The R-code consists 
 
 The R scripts are written in R 4.0.2 and run protocols for Smart Cities Albany Housing Project: Policy and Program Evaluation of HUD-funded properties and electricity consumption over the span from 2004 to 2019 years. The following R packages are used in this analysis:
 
-# Data handling
+### Data handling
 - 'tidyverse', including 'readr' (read data), 'tibble' (update dataframes), 'dplyr' (manipulate data), 'ggplot2' (create graphics)
 - 'ggalt' (extra coordinate systems, 'geoms', statistical transformations, scales and fonts for 'ggplot2')
 - 'gdata' (data manipulation)
 - 'censusxy' (U.S. Census Bureau's API for matching American street addresses with their longitude and latitude)
 
-# Matching algorithms
+### Matching algorithms
 - 'MatchIt' (multivariate matching)
 - 'cem' (loss function computation)
 - 'devtools' (developer tools such as indtallation from GitHub)
 - 'MatchingFrontier' (computation of the balance - sample size frontier)
 
-# Panel data analysis
+### Panel data analysis
 - 'plm' (linear models for panel data) 
 - 'lmtest' (testing linear regression models)
 - 'sandwich' (robust and cluster errors)
 - 'multiwayvcov' (multi-way clustering)
 - 'Hmisc' (miscellaneous functions for data analysis)
 
-# Visualization
+### Visualization
 - 'cowplot' (streamlined plot theme and plot annotations for 'ggplot2')
 - 'gridExtra' (miscellaneous functions for "grid" graphics)
 - 'sf' (spatial vector data encoder)
