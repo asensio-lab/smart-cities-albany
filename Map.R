@@ -1,41 +1,20 @@
-if (!require("sf")) install.packages("sf")
-library(sf)
+if (!require(c("tidyverse","sf","tmap","tigris","rappdirs","shinyjs","RColorBrewer","raster","biscale","cowplot","rgeos","maps","cartography"))) 
+  install.packages(c("tidyverse","sf","tmap","tigris","rappdirs","shinyjs","RColorBrewer","raster","biscale","cowplot","rgeos","maps","cartography"))
 
-if (!require("tmap")) install.packages("tmap")
-library(tmap)
-
-if (!require("tidyverse")) install.packages("tidyverse") 
 library(tidyverse)
-
-if (!require("tigris")) install.packages("tigris")
+library(sf)
+library(tmap)
 library(tigris)
-
-if (!require("rappdirs")) install.packages("rappdirs")
 library(rappdirs)
-
-if (!require("shinyjs")) install.packages("shinyjs")
 library(shinyjs)
-
-if (!require("RColorBrewer")) install.packages("RColorBrewer")
 library(RColorBrewer)
-
-if (!require("raster")) install.packages("raster")
 library(raster)
-
-if (!require("biscale")) install.packages("biscale")
 library(biscale)
-
-if (!require("cowplot")) install.packages("cowplot")
 library(cowplot)
-
-if (!require("rgeos")) install.packages("rgeos")
 library(rgeos)
-
-if (!require("maps")) install.packages("maps")
 library(maps)
-
-if (!require("cartography")) install.packages("cartography")
 library(cartography)
+
 
 # load data set, poverty data and shape files with city boundaries
 df <- read.csv(file = "PropertyStats.csv", header = TRUE) #16680
