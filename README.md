@@ -1,6 +1,6 @@
 # Replication code for "Housing policies accelerate energy efficiency participation"
 
-This is the code repository for the Albany Housing Project. The R-code consists of 2 parts. The first file consists of the fixed-effects model and matching algorithms to compare energy use in Albany, GA, among HUD-funded programs' participants and non-participants. The second part includes geographical visualization of the data (R script and supporting files). The data is deposited at [DOI](https://doi.org/10.7910/DVN/SF1DRW).
+This is the code repository for the Albany Housing Project. The R-code consists of 2 parts. The first file consists of the fixed-effects model and matching algorithms to compare energy use in Albany, GA, among HUD-funded programs' participants and non-participants. The second part includes geographical visualization of the data (R script and supporting files). The data is deposited at [https://doi.org/10.7910/DVN/SF1DRW](https://doi.org/10.7910/DVN/SF1DRW).
 
 
 ## Installation
@@ -55,4 +55,4 @@ First, the R code `Data_analysis.R` implements the following algorithms to reduc
 
 The R code `Data_analysis.R` evaluates the overall treatment effect of HUD funding, along with the treatment effect per program and per project, on the monthly electricity consumption (logged normalized by sqft.) from 2004 to 2019. Regression adjustments include time and group fixed effects. The model is implemented to the initial dataset as well as to the datasets after matching, standard errors are clustered at the property ID level. The script also contains the code for the visualizations except the Albany map.
 
-The R code `Map.R` supports the visualization of the map of Albany.
+The folder `Map` consists of `Map.R` and several shape files and supports the visualization of the map of Albany.
