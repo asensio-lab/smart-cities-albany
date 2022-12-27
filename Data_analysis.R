@@ -59,7 +59,7 @@ resexp <- function(cluster,m,n){
 
 ## Fixed Effects Model
 
-ELC_property <- merge(ELC, PropertyStats, by = 'AddressIndex')
+ELC_property <- merge(ELC, PropertyStats, by = 'ID')
 ELC_property <- ELC_property %>%
   mutate(NormConsumption = Consumption/size,
          Treatment = ifelse(InitialPeriod<=Period,1,0)) # Treatment variable encompass both the fact of being treated and the time of treatment - turns out 1 when the treated unit gets treatment
@@ -157,7 +157,8 @@ for(r in seq(2,100,1))
   r_list <- c(r_list,r)
   mean_std_diff_list <- c(mean_std_diff_list,mean(summary(gen_match)$reduction[-1,1]))
   N_list <- c(N_list,summary(gen_match)$nn[4,1])
-  G <- L1.meas(match.data(gen_match)$Group, match.data(gen_match), drop=c("X","ID","FullAddress","lot_size","zoningType","siteZoningIdent","propClass","yearBuilt","rooms","floors","condition","foundationType","roofCover","wallType","improvementYear","PrimaryId","Plan.Year","Project","Program","InitialDate","initialmonth","initialyear","InitialPeriod","Group","Longitude","Latitude","FIPS","Interview","distance","weights",
+  G <- L1.meas(match.data(gen_match)$Group, match.data(gen_match), drop=c("X","lot_size","zoningType","siteZoningIdent","propClass","yearBuilt","rooms","floors","condition","foundationType","roofCover","wallType","improvementYear","PrimaryId","Plan.Year",
+                                                                          "Project","Program","InitialDate","initialmonth","initialyear","InitialPeriod","InitialQuarter","Group","Longitude","Latitude","FIPS","Interview","distance","weights",
                                                                           "assessment","MedianIncome","PovertyBelow","FemaleHouseholder","Black","MedianAge","RentAsIncome35","OccupantsRoom","SNAP"), breaks = NULL, weights=match.data(gen_match)$weights, grouping = NULL)
   G_list <- c(G_list,0.5*(G[["L1"]]))
 }
@@ -255,7 +256,7 @@ gen_matched_data <- match.data(gen_match)
 gen_matched_data$Index <- 1:nrow(gen_matched_data)
 
 # merge data and create factors
-genPanel <- merge(ELC, gen_matched_data, by = 'AddressIndex')
+genPanel <- merge(ELC, gen_matched_data, by = 'ID')
 genPanel <- genPanel %>% 
   mutate(NormConsumption = Consumption/size,
          Treatment = ifelse(InitialPeriod<=Period,1,0)) 
@@ -349,8 +350,8 @@ for(r in seq(2,100,1))
   r_list <- c(r_list,r)
   mean_std_diff_list <- c(mean_std_diff_list,mean(summary(psm_match)$reduction[-1,1]))
   N_list <- c(N_list,summary(psm_match)$nn[4,1])
-  P <- L1.meas(match.data(psm_match)$Group, match.data(psm_match), drop=c("X","ID","FullAddress","lot_size","zoningType","siteZoningIdent","propClass","yearBuilt","rooms","floors","condition","foundationType","roofCover","wallType","improvementYear","PrimaryId","Plan.Year",
-                                                                          "Project","Program","InitialDate","initialmonth","initialyear","InitialPeriod","Group","Longitude","Latitude","FIPS","Interview","distance","weights",
+  P <- L1.meas(match.data(psm_match)$Group, match.data(psm_match), drop=c("X","lot_size","zoningType","siteZoningIdent","propClass","yearBuilt","rooms","floors","condition","foundationType","roofCover","wallType","improvementYear","PrimaryId","Plan.Year",
+                                                                          "Project","Program","InitialDate","initialmonth","initialyear","InitialPeriod","InitialQuarter","Group","Longitude","Latitude","FIPS","Interview","distance","weights",
                                                                           "assessment","MedianIncome","PovertyBelow","FemaleHouseholder","Black","MedianAge","RentAsIncome35","OccupantsRoom","SNAP"), breaks = NULL, weights=match.data(psm_match)$weights, grouping = NULL)
   P_list <- c(P_list,0.5*(P[["L1"]]))
 }
@@ -453,7 +454,7 @@ psm_matched_data <- match.data(psm_match) #6767
 psm_matched_data$Index <- 1:nrow(psm_matched_data)
 
 # merge data and create factors
-psmPanel <- merge(ELC, psm_matched_data, by = 'AddressIndex') #1,170,765
+psmPanel <- merge(ELC, psm_matched_data, by = 'ID') #1,170,765
 psmPanel <- psmPanel %>% 
   mutate(NormConsumption = Consumption/size,
          Treatment = ifelse(InitialPeriod<=Period,1,0)) # Treatment variable encompass both the fact of being treated and the time of treatment - turns out 1 when the treated unit gets treatment
@@ -537,14 +538,13 @@ resexp(confint(coeftest(psm.ne, vcov=function(x) vcovHC(x, cluster="group", type
 
 ## MatchingFrontier 
 
-Property_frontier <- subset(PropertyStats, select = c('BaselineConsumption','size','baths','beds','market','PropertyAge', 'Group', 'AddressIndex', 'InitialPeriod', 'ID', 'Program', 'Project'))
+Property_frontier <- subset(PropertyStats, select = c('BaselineConsumption','size','baths','beds','market','PropertyAge', 'Group', 'InitialPeriod', 'InitialQuarter','ID', 'Program', 'Project'))
 Property_frontier <- Property_frontier %>%
   mutate(InitialPeriod = replace(InitialPeriod,is.na(InitialPeriod),500), # assign '500' to never-treated units (NA's) to construct Treatment variable next
          Program = replace(Program,is.na(Program),'None'),
          Project = replace(Project,is.na(Project),'None'))
-match.on <- colnames(Property_frontier)[!(colnames(Property_frontier) %in% c('Group', 'AddressIndex', 'InitialPeriod', 'ID', 'Program', 'Project'))]
+match.on <- colnames(Property_frontier)[!(colnames(Property_frontier) %in% c('Group', 'InitialPeriod', 'InitialQuarter','ID', 'Program', 'Project'))]
 frontier <- makeFrontier(dataset=Property_frontier, treatment = 'Group', match.on = match.on, QOI = 'SATT', metric = 'L1') 
-frontier # an imbalance frontier with 15824 points
 frontier_matched_data <- generateDataset(frontier,15824) 
 plot(frontier, type = 'l',xlim=c(0,17500),ylim=c(0.05,0.5),ylab = 'Absolute Loss Function',main = '') # Figure S5
 
