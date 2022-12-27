@@ -677,7 +677,7 @@ gen_coef_CS <- as.data.frame(gen_effects$att.egt[58:103])
 gen_se_CS <- as.data.frame(gen_effects$se.egt[58:103])
 gen_t <- as.data.frame(gen_effects$egt[58:103])
 gen_CS <- cbind(gen_t,gen_coef_CS,gen_se_CS)
-gen_CS_CM <- cbind(gen_CS,gen_CM) # gen_CM extracted as two vectors (coefficients and standard errors) from DiD results by Chaisemartin & D'Haultfoeuille (2020)
+gen_CS_CM <- cbind(gen_CS,gen_CM) # gen_CM extracted as Coef. and S.E. vectors from DiD results by Chaisemartin & D'Haultfoeuille (2020)
 names(gen_CS_CM) <- c("t_CS","coef_CS","se_CS","t_CM","coef_CM","se_CM")
 
 gen_comparison <- ggplot(gen_CS_CM, aes(t_CS)) +
