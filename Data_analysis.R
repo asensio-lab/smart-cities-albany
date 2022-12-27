@@ -561,26 +561,6 @@ twowayfeweights(ELC_property, Y, G, T, D, cmd_type="feTR")
 twowayfeweights(genPanel, Y, G, T, D, cmd_type="feTR")
 twowayfeweights(psmPanel, Y, G, T, D, cmd_type="feTR")
                         
-## Parallel trends assumption - Figure S7
-
-show_plot <- function(dat,label="", show.means=TRUE) {
-  gdat<- dat %>%
-    group_by(Group, Period, Treatment) %>%
-    summarise(Consumption = NormConsumption) %>%
-    mutate(Group=ifelse(Group==1,"Treated","Untreated"))
-  
-  gg <- ggplot(gdat, aes(y=Consumption, x=Period, group=Group, color=factor(Group))) +
-    geom_smooth(size=2,aes(fill = Group)) + 
-    geom_vline(xintercept=46,linetype="dashed",size=1) + 
-    scale_x_continuous(expand = c(0, 0), breaks = seq(0,180,12)) +
-    theme_classic() + 
-    theme(legend.position="bottom") + 
-    xlab("Period") + 
-    ylab("Monthly Consumption, KWh/sqft")
-  gg
-}  
-show_plot(psmPanel,show.means = FALSE) 
-                        
 ## Group by quarter: with and without matching
 
 ELC_full <- ELC_property %>% 
@@ -629,7 +609,6 @@ G = "ID"
 T = "quarterELC"
 D = "Treatment"
 controls = c("yearELC","sumCoolingDays","sumHeatingDays")
-
 set.seed(1)
 elc_quarter_log <- DIDmultiplegt::did_multiplegt(ELC_quarter, Y, G, T, D, cluster="ID", controls, brep=50, placebo=14, dynamic=47, covariance=TRUE, average_effect = "simple", parallel=TRUE) # without matching
 gen_quarter_log <- DIDmultiplegt::did_multiplegt(gen_quarter, Y, G, T, D, cluster="ID", controls, brep=50, placebo=14, dynamic=47, covariance=TRUE, average_effect = "simple", parallel=TRUE) # after getenic matching
@@ -672,8 +651,28 @@ psm_full <- att_gt(yname = "log",
                    panel = TRUE)
 psm_effects <- aggte(psm_full, type = "dynamic",na.rm = TRUE)
 ggdid(psm_effects) # after propensity score matching
+                        
+## Parallel trends assumption - Figure S7
 
-# Figure S6
+show_plot <- function(dat,label="", show.means=TRUE) {
+  gdat<- dat %>%
+    group_by(Group, Period, Treatment) %>%
+    summarise(Consumption = NormConsumption) %>%
+    mutate(Group=ifelse(Group==1,"Treated","Untreated"))
+  
+  gg <- ggplot(gdat, aes(y=Consumption, x=Period, group=Group, color=factor(Group))) +
+    geom_smooth(size=2,aes(fill = Group)) + 
+    geom_vline(xintercept=46,linetype="dashed",size=1) + 
+    scale_x_continuous(expand = c(0, 0), breaks = seq(0,180,12)) +
+    theme_classic() + 
+    theme(legend.position="bottom") + 
+    xlab("Period") + 
+    ylab("Monthly Consumption, KWh/sqft")
+  gg
+}  
+show_plot(psmPanel,show.means = FALSE) 
+
+## Comparison of TWFE and staggered DiD estimators - Figure S6
 gen_coef_CS <- as.data.frame(gen_effects$att.egt[58:103])
 gen_se_CS <- as.data.frame(gen_effects$se.egt[58:103])
 gen_t <- as.data.frame(gen_effects$egt[58:103])
