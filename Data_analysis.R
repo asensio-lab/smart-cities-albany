@@ -1,5 +1,7 @@
-if (!require(c("tidyverse", "ggalt","gdata","gridExtra","rgenoud","Matching","MatchIt","plm","Hmisc","lmtest","sandwich","multiwayvcov","cem","devtools","did","DIDmultiplegt","TwoWayFEWeights")))
-  install.packages(c("tidyverse","ggalt","gdata","gridExtra","rgenoud","Matching","MatchIt","plm","Hmisc","lmtest","sandwich","multiwayvcov","cem","devtools","did","DIDmultiplegt","TwoWayFEWeights"))
+if (!require(c("tidyverse", "ggalt","gdata","gridExtra","rgenoud","Matching","MatchIt",
+               "plm","Hmisc","lmtest","sandwich","multiwayvcov","cem","devtools","did","DIDmultiplegt","TwoWayFEWeights")))
+  install.packages(c("tidyverse","ggalt","gdata","gridExtra","rgenoud","Matching","MatchIt",
+                     "plm","Hmisc","lmtest","sandwich","multiwayvcov","cem","devtools","did","DIDmultiplegt","TwoWayFEWeights"))
 
 library(tidyverse)
 library(ggalt)
