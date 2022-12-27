@@ -550,13 +550,15 @@ plot(frontier, type = 'l',xlim=c(0,17500),ylim=c(0.05,0.5),ylab = 'Absolute Loss
 
 ## Estimation of the weights and measure of robustness to treatment effect heterogeneity
 
-ELC_property$log <- log(ELC_property$NormConsumption)
-genPanel$log <- log(genPanel$NormConsumption)
-psmPanel$log <- log(psmPanel$NormConsumption)
 Y = "log"
 G = "ID"
 T = "Period"
 D = "Treatment"
+                        
+ELC_property$log <- log(ELC_property$NormConsumption)
+genPanel$log <- log(genPanel$NormConsumption)
+psmPanel$log <- log(psmPanel$NormConsumption)
+                        
 twowayfeweights(ELC_property, Y, G, T, D, cmd_type="feTR")
 twowayfeweights(genPanel, Y, G, T, D, cmd_type="feTR")
 twowayfeweights(psmPanel, Y, G, T, D, cmd_type="feTR")
@@ -603,13 +605,10 @@ psm_quarter <- psm_full %>%
                         mutate(log=log(sum))
 
 ## Difference-in-Differences design by de Chaisemartin & D'Haultfoeuille (2020)
-                        
-Y = "log"
-G = "ID"
-T = "quarterELC"
-D = "Treatment"
-controls = c("yearELC","sumCoolingDays","sumHeatingDays")
+ 
 set.seed(1)
+T = "quarterELC"
+controls = c("yearELC","sumCoolingDays","sumHeatingDays")
 elc_quarter_log <- DIDmultiplegt::did_multiplegt(ELC_quarter, Y, G, T, D, cluster="ID", controls, brep=50, placebo=14, dynamic=47, covariance=TRUE, average_effect = "simple", parallel=TRUE) # without matching
 gen_quarter_log <- DIDmultiplegt::did_multiplegt(gen_quarter, Y, G, T, D, cluster="ID", controls, brep=50, placebo=14, dynamic=47, covariance=TRUE, average_effect = "simple", parallel=TRUE) # after getenic matching
 psm_quarter_log <- DIDmultiplegt::did_multiplegt(psm_quarter, Y, G, T, D, cluster="ID", controls, brep=50, placebo=14, dynamic=47, covariance=TRUE, average_effect = "simple", parallel=TRUE) # after propensity score matching
@@ -673,6 +672,7 @@ show_plot <- function(dat,label="", show.means=TRUE) {
 show_plot(psmPanel,show.means = FALSE) 
 
 ## Comparison of TWFE and staggered DiD estimators - Figure S6
+                        
 gen_coef_CS <- as.data.frame(gen_effects$att.egt[58:103])
 gen_se_CS <- as.data.frame(gen_effects$se.egt[58:103])
 gen_t <- as.data.frame(gen_effects$egt[58:103])
