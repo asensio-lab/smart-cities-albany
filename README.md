@@ -25,6 +25,9 @@ The R scripts are written in R 4.0.2 and run protocols for Smart Cities Albany H
 - 'sandwich' (robust and cluster errors)
 - 'multiwayvcov' (multi-way clustering)
 - 'Hmisc' (miscellaneous functions for data analysis)
+- 'did' (difference-in-differences (DiD) design by Callaway and Sant’Anna (2021))
+- 'DIDmultiplegt' (difference-in-differences (DiD) design by Chaisemartin and D'Haultfoeuille (2020))
+- 'TwoWayFEWeights' (treatment effect heterogeneity estimation)
 
 ### Visualization
 - 'cowplot' (streamlined plot theme and plot annotations for 'ggplot2')
