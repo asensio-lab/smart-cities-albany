@@ -655,20 +655,22 @@ ggdid(psm_effects) # after propensity score matching
 
 show_plot <- function(dat,label="", show.means=TRUE) {
   gdat<- dat %>%
-    group_by(Group, Period, Treatment) %>%
-    summarise(Consumption = NormConsumption) %>%
+    group_by(Group,quarterELC) %>%
+    summarise(mean_Consumption = mean(NormConsumption)) %>%
     mutate(Group=ifelse(Group==1,"Treated","Untreated"))
   
-  gg <- ggplot(gdat, aes(y=Consumption, x=Period, group=Group, color=factor(Group))) +
-    geom_smooth(size=2,aes(fill = Group)) + 
-    geom_vline(xintercept=46,linetype="dashed",size=1) + 
-    scale_x_continuous(expand = c(0, 0), breaks = seq(0,180,12)) +
+  gg <- ggplot(data=gdat,aes(y=mean_Consumption, x=quarterELC, group=Group, color=factor(Group))) +
+    geom_smooth(aes(fill=factor(Group)),se=TRUE,size=1,method="loess") +
+    geom_vline(xintercept=16,linetype="dashed",size=1) + 
+    scale_color_manual(values = c("#0e668b","#7f7f7f")) +
+    scale_fill_manual(values = c("#8ab7db","#b3b3b3")) +
+    scale_x_discrete(expand = c(0, 0), breaks = seq(0,64,4)) +
     theme_classic() + 
     theme(legend.position="bottom") + 
-    xlab("Period") + 
-    ylab("Monthly Consumption, KWh/sqft")
+    xlab("Quarter") + 
+    ylab("Quarterly Consumption, KWh/sqft")
   gg
-}  
+} 
 show_plot(psmPanel,show.means = FALSE) 
 
 ## Comparison of TWFE and staggered DiD estimators - Figure S6
