@@ -264,18 +264,18 @@ genPanel$Treatment <- ifelse(is.na(genPanel$Treatment),0,genPanel$Treatment)
 genPanel <- genPanel %>% filter(NormConsumption <= quantile(NormConsumption, c(0.9999), na.rm = TRUE))
 
 # by group
-gen <- plm(log(NormConsumption) ~ Treatment + yearELC + monthELC + CoolingDays + HeatingDays, data = genPanel, model='within', index = c('ID','Period'))
+gen <- plm(log(NormConsumption) ~ Treatment + yearELC + monthELC + CoolingDays + HeatingDays, data = genPanel, model='within', index = c('ID','Period')) # use dataframe of the effective sample
 summary(gen)
-coeftest(gen, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) 
+coeftest(gen, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) # cluster at the property ID level
 resexp(coeftest(gen, vcov=function(x) vcovHC(x, cluster="group", type="HC0")),1,1) 
 confint(coeftest(gen, vcov=function(x) vcovHC(x, cluster="group", type="HC0")))
 resexp(confint(coeftest(gen, vcov=function(x) vcovHC(x, cluster="group", type="HC0"))),1,2)
 
 # placebo testing
 genPanel <- genPanel %>% mutate(Treatment_placebo = ifelse(Group==1 & 20<Period,1,0))
-gen.pl <- plm(log(NormConsumption) ~ Treatment_placebo + yearELC + monthELC + CoolingDays + HeatingDays, data = genPanel, model='within', index = c('ID','Period'))
+gen.pl <- plm(log(NormConsumption) ~ Treatment_placebo + yearELC + monthELC + CoolingDays + HeatingDays, data = genPanel, model='within', index = c('ID','Period')) # use dataframe of the effective sample
 summary(gen.pl) # (not sign)
-coeftest(gen.pl, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) 
+coeftest(gen.pl, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) # cluster at the property ID level
 resexp(coeftest(gen.pl, vcov=function(x) vcovHC(x, cluster="group", type="HC0")),1,1) 
 confint(coeftest(gen.pl, vcov=function(x) vcovHC(x, cluster="group", type="HC0")))
 resexp(confint(coeftest(gen.pl, vcov=function(x) vcovHC(x, cluster="group", type="HC0"))),1,2)
@@ -286,9 +286,9 @@ genPanel <- genPanel %>%
                                   Treatment==1 & Program == 'CDBG' ~ 'CDBG',
                                   Treatment==1 & Program == 'HOME' ~ 'HOME')) 
 genPanel$TreatProgram <- factor(genPanel$TreatProgram, levels = c("None", "CDBG", "HOME"))
-gen.program <- plm(log(NormConsumption) ~ TreatProgram + yearELC + monthELC + CoolingDays + HeatingDays, data = genPanel,model='within', index = c('ID','Period'))
+gen.program <- plm(log(NormConsumption) ~ TreatProgram + yearELC + monthELC + CoolingDays + HeatingDays, data = genPanel,model='within', index = c('ID','Period')) # use dataframe of the effective sample
 summary(gen.program)
-coeftest(gen.program, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) 
+coeftest(gen.program, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) # cluster at the property ID level
 resexp(coeftest(gen.program, vcov=function(x) vcovHC(x, cluster="group", type="HC0")),2,1) 
 confint(coeftest(gen.program, vcov=function(x) vcovHC(x, cluster="group", type="HC0")))
 resexp(confint(coeftest(gen.program, vcov=function(x) vcovHC(x, cluster="group", type="HC0"))),2,2)
@@ -318,9 +318,9 @@ genPanel$TreatProject <- factor(genPanel$TreatProject, levels = c("None","Acquis
                                                                   "Hudson Lane Sewer Connections","Lead-Based Paint Remediations","Public Service","Relocation",
                                                                   "Rental Rehabilitation - CDBG","Rental Rehabilitation - HOME","Non-energy"))
 
-gen.project <- plm(log(NormConsumption) ~ TreatProject + yearELC + monthELC + CoolingDays + HeatingDays, data = genPanel, model='within', index = c('ID','Period'))
+gen.project <- plm(log(NormConsumption) ~ TreatProject + yearELC + monthELC + CoolingDays + HeatingDays, data = genPanel, model='within', index = c('ID','Period')) # use dataframe of the effective sample
 summary(gen.project)
-coeftest(gen.project, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) 
+coeftest(gen.project, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) # cluster at the property ID level
 resexp(coeftest(gen.project, vcov=function(x) vcovHC(x, cluster="group", type="HC0")),15,1) 
 confint(coeftest(gen.project, vcov=function(x) vcovHC(x, cluster="group", type="HC0")))
 resexp(confint(coeftest(gen.project, vcov=function(x) vcovHC(x, cluster="group", type="HC0"))),15,2)
@@ -329,9 +329,9 @@ resexp(confint(coeftest(gen.project, vcov=function(x) vcovHC(x, cluster="group",
 genPanel_NE<- psmPanel %>% filter(!TreatProject %in% c("Energy Efficiency","Emergency Repairs",
                                                        "Homeowner Rehabilitation - CDBG","Rental Rehabilitation - CDBG",
                                                        "Homeowner Rehabilitation - HOME","Rental Rehabilitation - HOME"))
-gen.ne <- plm(log(NormConsumption) ~ Treatment + yearELC + monthELC + CoolingDays + HeatingDays, data = genPanel_NE, model='within', index = c('ID','Period'))
+gen.ne <- plm(log(NormConsumption) ~ Treatment + yearELC + monthELC + CoolingDays + HeatingDays, data = genPanel_NE, model='within', index = c('ID','Period')) 
 summary(gen.ne) # (+) sign after clustering
-coeftest(gen.ne, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) 
+coeftest(gen.ne, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) # cluster at the property ID level
 resexp(coeftest(gen.ne, vcov=function(x) vcovHC(x, cluster="group", type="HC0")),1,1) 
 confint(coeftest(gen.ne, vcov=function(x) vcovHC(x, cluster="group", type="HC0")))
 resexp(confint(coeftest(gen.ne, vcov=function(x) vcovHC(x, cluster="group", type="HC0"))),1,2)                       
@@ -463,18 +463,18 @@ table(psmPanel$Treatment)
 psmPanel <- psmPanel %>% filter(NormConsumption <= quantile(NormConsumption, c(0.9999), na.rm = TRUE)) 
 
 # by group
-psm <- plm(log(NormConsumption) ~ Treatment + yearELC + monthELC + CoolingDays + HeatingDays, data = psmPanel, model = 'within', index = c('ID','Period')) # no weights included as the results are almost identical (-0.0565 vs.-0.0562) but no clustering allowed for a weighted panel regression with fixed effects 
+psm <- plm(log(NormConsumption) ~ Treatment + yearELC + monthELC + CoolingDays + HeatingDays, data = psmPanel, model = 'within', index = c('ID','Period')) # use dataframe of the effective sample 
 summary(psm) 
-coeftest(psm, vcov=function(x) vcovHC(x, cluster="group", type="HC0"))
+coeftest(psm, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) # cluster at the property ID level
 resexp(coeftest(psm, vcov=function(x) vcovHC(x, cluster="group", type="HC0")),1,1) 
 confint(coeftest(psm, vcov=function(x) vcovHC(x, cluster="group", type="HC0")))
 resexp(confint(coeftest(psm, vcov=function(x) vcovHC(x, cluster="group", type="HC0"))),1,2)
 
 # placebo testing
 psmPanel <- psmPanel %>% mutate(Treatment_placebo = ifelse(Group==1 & 20<Period,1,0)) # Treatment assigned to the middle of the pre-treatment period
-psm.pl <- plm(log(NormConsumption) ~ Treatment_placebo + yearELC + monthELC + CoolingDays + HeatingDays, data = psmPanel, model = 'within', index = c('ID','Period'))
+psm.pl <- plm(log(NormConsumption) ~ Treatment_placebo + yearELC + monthELC + CoolingDays + HeatingDays, data = psmPanel, model = 'within', index = c('ID','Period')) # use dataframe of the effective sample
 summary(psm.pl) 
-coeftest(psm.pl, vcov=function(x) vcovHC(x, cluster="group",type="HC0")) # not sign
+coeftest(psm.pl, vcov=function(x) vcovHC(x, cluster="group",type="HC0")) # cluster at the property ID level
 resexp(coeftest(psm.pl, vcov=function(x) vcovHC(x, cluster="group", type="HC0")),1,1) 
 confint(coeftest(psm.pl, vcov=function(x) vcovHC(x, cluster="group", type="HC0")))
 resexp(confint(coeftest(psm.pl, vcov=function(x) vcovHC(x, cluster="group", type="HC0"))),1,2)
@@ -486,9 +486,9 @@ psmPanel <- psmPanel %>%
                                   Treatment==1 & Program == 'HOME' ~ 'HOME'))
 
 psmPanel$TreatProgram <- factor(psmPanel$TreatProgram, levels = c("None", "CDBG", "HOME"))
-psm.program <- plm(log(NormConsumption) ~ TreatProgram + yearELC + monthELC + CoolingDays + HeatingDays, data = psmPanel, model='within', index = c('ID','Period'))  
+psm.program <- plm(log(NormConsumption) ~ TreatProgram + yearELC + monthELC + CoolingDays + HeatingDays, data = psmPanel, model='within', index = c('ID','Period')) # use dataframe of the effective sample
 summary(psm.program)
-coeftest(psm.program, vcov=function(x) vcovHC(x, cluster="group", type="HC0"))
+coeftest(psm.program, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) # cluster at the property ID level
 resexp(coeftest(psm.program, vcov=function(x) vcovHC(x, cluster="group", type="HC0")),2,1) 
 confint(coeftest(psm.program, vcov=function(x) vcovHC(x, cluster="group", type="HC0")))
 resexp(confint(coeftest(psm.program, vcov=function(x) vcovHC(x, cluster="group", type="HC0"))),2,2)
@@ -518,9 +518,9 @@ psmPanel$TreatProject <- factor(psmPanel$TreatProject, levels = c("None","Acquis
                                                                   "Hudson Lane Sewer Connections","Lead-Based Paint Remediations","Public Service","Relocation",
                                                                   "Rental Rehabilitation - CDBG","Rental Rehabilitation - HOME","Non-energy"))
 
-psm.project <- plm(log(NormConsumption) ~ TreatProject + yearELC + monthELC + CoolingDays + HeatingDays, data = psmPanel, model = 'within', index = c('ID','Period'))
+psm.project <- plm(log(NormConsumption) ~ TreatProject + yearELC + monthELC + CoolingDays + HeatingDays, data = psmPanel, model = 'within', index = c('ID','Period')) # use dataframe of the effective sample
 summary(psm.project)
-coeftest(psm.project, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) 
+coeftest(psm.project, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) # cluster at the property ID level
 resexp(coeftest(psm.project, vcov=function(x) vcovHC(x, cluster="group", type="HC0")),15,1) 
 confint(coeftest(psm.project, vcov=function(x) vcovHC(x, cluster="group", type="HC0")))
 resexp(confint(coeftest(psm.project, vcov=function(x) vcovHC(x, cluster="group", type="HC0"))),15,2)
@@ -531,7 +531,7 @@ psmPanel_NE <- psmPanel %>% filter(!TreatProject %in% c("Energy Efficiency","Eme
                                                         "Homeowner Rehabilitation - HOME","Rental Rehabilitation - HOME"))
 psm.ne <- plm(log(NormConsumption) ~ Treatment + yearELC + monthELC + CoolingDays + HeatingDays, data = psmPanel_NE, model='within', index = c('ID','Period'))
 summary(psm.ne) # (+) sign after clustering
-coeftest(psm.ne, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) 
+coeftest(psm.ne, vcov=function(x) vcovHC(x, cluster="group", type="HC0")) # cluster at the property ID level
 resexp(coeftest(psm.ne, vcov=function(x) vcovHC(x, cluster="group", type="HC0")),1,1)
 confint(coeftest(psm.ne, vcov=function(x) vcovHC(x, cluster="group", type="HC0")))
 resexp(confint(coeftest(psm.ne, vcov=function(x) vcovHC(x, cluster="group", type="HC0"))),1,2)
