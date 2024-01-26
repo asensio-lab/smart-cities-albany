@@ -225,16 +225,11 @@ gen_avg_var_aft <- c(sqrt((var(gen_matched_data$BaselineConsumption[gen_matched_
                      sqrt((var(gen_matched_data$RentAsIncome35[gen_matched_data$Group==1]) + var(gen_matched_data$RentAsIncome35[gen_matched_data$Group==0]))/2),
                      sqrt((var(gen_matched_data$SNAP[gen_matched_data$Group==1]) + var(gen_matched_data$SNAP[gen_matched_data$Group==0]))/2))
 
-gen_std_mean_dif_aft <- 100*(gen_mean_treated_aft-gen_mean_control_aft)/gen_avg_var_aft
-
-gen_reduction <- round(summary(gen_match, data = PropertyStats, 
-                               addlvariables = c("assessment","MedianIncome","FemaleHouseholder","Black","PovertyBelow",
-                                                 "RentAsIncome35","SNAP"))$reduction[2:14,1],2)                             
+gen_std_mean_dif_aft <- 100*(gen_mean_treated_aft-gen_mean_control_aft)/gen_avg_var_aft                            
 
 gen_bias_df <- data.frame('Covariates' = Covariates,                          
                           'Before' = gen_std_mean_dif_bef,
-                          'After' = gen_std_mean_dif_aft, 
-                          'Reduction' = gen_reduction)
+                          'After' = gen_std_mean_dif_aft)
 
 gg_gen <- ggplot(gen_bias_df, aes(x=After, xend=Before, y=Covariates, group=Covariates)) +
   geom_dumbbell(color = '#e8ac51',
@@ -369,7 +364,7 @@ summary(psm_match, data = PropertyStats, addlvariables = c("assessment","MedianI
 # extract matched data
 psm_matched_data <- match.data(psm_match) #6767
 psm_matched_data$Index <- 1:nrow(psm_matched_data)
-                        
+
 # bias reduction in standardized percent bias (Figure 2)
 psm_mean_treated_bef <- summary(psm_match, data = PropertyStats, 
                                 addlvariables = c("assessment","MedianIncome","FemaleHouseholder","Black","PovertyBelow",
@@ -417,11 +412,7 @@ psm_avg_var_aft <- c(sqrt((var(psm_matched_data$BaselineConsumption[psm_matched_
                      sqrt((var(psm_matched_data$RentAsIncome35[psm_matched_data$Group==1]) + var(psm_matched_data$RentAsIncome35[psm_matched_data$Group==0]))/2),
                      sqrt((var(psm_matched_data$SNAP[psm_matched_data$Group==1]) + var(psm_matched_data$SNAP[psm_matched_data$Group==0]))/2))
 
-psm_std_mean_dif_aft <- 100*(psm_mean_treated_aft-psm_mean_control_aft)/psm_avg_var_aft
-
-psm_reduction <- round(summary(psm_match, data = PropertyStats, 
-                               addlvariables = c("assessment","MedianIncome","FemaleHouseholder","Black","PovertyBelow",
-                                                 "RentAsIncome35","SNAP"))$reduction[2:14,1],2)                             
+psm_std_mean_dif_aft <- 100*(psm_mean_treated_aft-psm_mean_control_aft)/psm_avg_var_aft                           
 
 names <- c("Average Baseline Consumption", "Property Size", "No. Beds", "No. Baths", "Property Age", "Market Property Value", "Assessment Property Value","Median Income", "Female Head of the Household", "Black Population", "Population below Poverty Level", "Gross Rent more than 35% of Household Incomes", "Population on SNAP")
 
@@ -429,8 +420,7 @@ Covariates <- factor(names, ordered = TRUE, levels = rev(names))
 
 psm_bias_df <- data.frame('Covariates' = Covariates,
                           'Before' = psm_std_mean_dif_bef,
-                          'After' = psm_std_mean_dif_aft, 
-                          'Reduction' = psm_reduction)
+                          'After' = psm_std_mean_dif_aft)
 
 gg_psm <- ggplot(psm_bias_df, aes(x=After, xend=Before, y=Covariates, group=Covariates)) +
   geom_vline(colour='#787878',xintercept = 0) +
