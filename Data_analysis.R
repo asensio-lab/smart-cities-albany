@@ -158,7 +158,7 @@ for(r in seq(2,100,1))
   mean_std_diff_list <- c(mean_std_diff_list,mean(summary(gen_match)$reduction[-1,1]))
   N_list <- c(N_list,summary(gen_match)$nn[4,1])
   G <- L1.meas(match.data(gen_match)$Group, match.data(gen_match), drop=c("X","lot_size","zoningType","siteZoningIdent","propClass","yearBuilt","rooms","floors","condition","foundationType","roofCover","wallType","improvementYear","PrimaryId","Plan.Year",
-                                                                          "Project","Program","InitialDate","initialmonth","initialyear","InitialPeriod","InitialQuarter","Group","Longitude","Latitude","FIPS","Interview","distance","weights",
+                                                                          "Project","Program","InitialDate","initialmonth","initialyear","InitialPeriod","InitialQuarter","Group","Longitude","Latitude","FIPS","distance","weights",
                                                                           "assessment","MedianIncome","PovertyBelow","FemaleHouseholder","Black","MedianAge","RentAsIncome35","OccupantsRoom","SNAP"), breaks = NULL, weights=match.data(gen_match)$weights, grouping = NULL)
   G_list <- c(G_list,0.5*(G[["L1"]]))
 }
@@ -351,7 +351,7 @@ for(r in seq(2,100,1))
   mean_std_diff_list <- c(mean_std_diff_list,mean(summary(psm_match)$reduction[-1,1]))
   N_list <- c(N_list,summary(psm_match)$nn[4,1])
   P <- L1.meas(match.data(psm_match)$Group, match.data(psm_match), drop=c("X","lot_size","zoningType","siteZoningIdent","propClass","yearBuilt","rooms","floors","condition","foundationType","roofCover","wallType","improvementYear","PrimaryId","Plan.Year",
-                                                                          "Project","Program","InitialDate","initialmonth","initialyear","InitialPeriod","InitialQuarter","Group","Longitude","Latitude","FIPS","Interview","distance","weights",
+                                                                          "Project","Program","InitialDate","initialmonth","initialyear","InitialPeriod","InitialQuarter","Group","Longitude","Latitude","FIPS","distance","weights",
                                                                           "assessment","MedianIncome","PovertyBelow","FemaleHouseholder","Black","MedianAge","RentAsIncome35","OccupantsRoom","SNAP"), breaks = NULL, weights=match.data(psm_match)$weights, grouping = NULL)
   P_list <- c(P_list,0.5*(P[["L1"]]))
 }
