@@ -175,6 +175,10 @@ summary(gen_match, data = PropertyStats, addlvariables = c("assessment","MedianI
                                                            "RentAsIncome35","SNAP"))
 stopCluster(c1)
 
+# extract matched data (gen_match)
+gen_matched_data <- match.data(gen_match) 
+gen_matched_data$Index <- 1:nrow(gen_matched_data)
+
 # bias reduction in standardized percent bias (Figure 2)
 gen_mean_treated_bef <- summary(gen_match, data = PropertyStats, 
                                 addlvariables = c("assessment","MedianIncome","FemaleHouseholder","Black","PovertyBelow",
@@ -250,10 +254,6 @@ gg_gen <- ggplot(gen_bias_df, aes(x=After, xend=Before, y=Covariates, group=Cova
         legend.position="top",
         panel.border=element_blank())
 plot(gg_gen)
-
-# extract matched data (gen_match)
-gen_matched_data <- match.data(gen_match) 
-gen_matched_data$Index <- 1:nrow(gen_matched_data)
 
 # merge data and create factors
 genPanel <- merge(ELC, gen_matched_data, by = 'ID')
@@ -365,6 +365,11 @@ plot(H_list,mean_std_diff_list,xlab = 'Number of Observations Pruned' , ylab = '
 psm_match <- matchit(Group ~ BaselineConsumption + size + beds + baths + PropertyAge + market, method='nearest', data=PropertyStats, replace = TRUE, ratio=21)
 summary(psm_match, data = PropertyStats, addlvariables = c("assessment","MedianIncome","FemaleHouseholder","Black","PovertyBelow",
                                                            "RentAsIncome35","SNAP"))
+
+# extract matched data
+psm_matched_data <- match.data(psm_match) #6767
+psm_matched_data$Index <- 1:nrow(psm_matched_data)
+                        
 # bias reduction in standardized percent bias (Figure 2)
 psm_mean_treated_bef <- summary(psm_match, data = PropertyStats, 
                                 addlvariables = c("assessment","MedianIncome","FemaleHouseholder","Black","PovertyBelow",
@@ -448,10 +453,6 @@ gg_psm <- ggplot(psm_bias_df, aes(x=After, xend=Before, y=Covariates, group=Cova
         legend.position="top",
         panel.border=element_blank())
 plot(gg_psm)
-
-# extract matched data
-psm_matched_data <- match.data(psm_match) #6767
-psm_matched_data$Index <- 1:nrow(psm_matched_data)
 
 # merge data and create factors
 psmPanel <- merge(ELC, psm_matched_data, by = 'ID') #1,170,765
